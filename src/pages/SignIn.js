@@ -34,6 +34,7 @@ const SignIn = () => {
               id="email"
               value={email}
               onChange={handleChange}
+              style={{ marginTop: "2rem" }}
             />
             <div className="passwordInputDiv">
               <input
