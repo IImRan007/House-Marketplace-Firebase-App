@@ -9,7 +9,7 @@ const Explore = () => {
         <p className="pageHeader">Explore</p>
       </header>
       <main>
-        {/* SLider */}
+        {/* Slider */}
         <p className="exploreCategoryHeading">Categories</p>
         <div className="exploreCategories">
           <Link to="/category/rent">
