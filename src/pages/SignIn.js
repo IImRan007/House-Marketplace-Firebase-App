@@ -6,6 +6,8 @@ import visibilityIcon from "../assets/svg/visibilityIcon.svg";
 import { toast } from "react-toastify";
 // Firebase
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+// Components
+import OAuth from "../components/OAuth";
 
 const SignIn = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -86,6 +88,10 @@ const SignIn = () => {
               </button>
             </div>
           </form>
+
+          {/* Google OAuth */}
+          <OAuth />
+
           <Link to="/sign-up" className="registerLink">
             Sign Up Instead
           </Link>
