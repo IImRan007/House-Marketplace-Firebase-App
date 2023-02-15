@@ -9,6 +9,8 @@ import {
   uploadBytesResumable,
   getDownloadURL,
 } from "firebase/storage";
+// Firestore
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { db } from "../firebase.config";
 // Components
 import Spinner from "../components/Spinner";
@@ -72,6 +74,7 @@ const CreateListing = () => {
     // eslint-disable-next-line
   }, [isMounted]);
 
+  // Handle Change
   const onMutate = (e) => {
     let boolean = null;
 
@@ -113,7 +116,7 @@ const CreateListing = () => {
 
     if (images.length > 6) {
       setLoading(false);
-      toast.error("Max 6 images");
+      toast.error("Max 6 images are allowed");
       return;
     }
 
@@ -194,9 +197,26 @@ const CreateListing = () => {
       return;
     });
 
-    console.log(imageUrls);
+    const formDataCopy = {
+      ...formData,
+      imageUrls,
+      geolocation,
+      timestamp: serverTimestamp(),
+    };
+
+    delete formDataCopy.images;
+    delete formDataCopy.address;
+
+    location && (formDataCopy.location = location);
+    !formDataCopy.offer && delete formDataCopy.discountedPrice;
+
+    const docRef = await addDoc(collection(db, "listings"), formDataCopy);
 
     setLoading(false);
+
+    toast.success("Listing saved");
+
+    navigate(`/category/${formDataCopy.type}/${docRef.id}`);
   };
 
   if (loading) {
